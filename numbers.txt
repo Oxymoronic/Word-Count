@@ -1,0 +1,6 @@
+Program should also count numbers as words, (i.e. 9 9 9 9 9).
+5 5 5 5 5
+4 4 4 4
+3 3 3
+2 2
+1

@@ -1,0 +1,2 @@
+Are-words,separated by\different)characters~treated*separately
+or_are=they+all.considered!<the>same?

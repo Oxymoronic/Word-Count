@@ -1,0 +1,14 @@
+a a a a a a a a a a a a a a a a (16)
+b b b b b b b b b (9)
+c c c c c c c (7)
+d d d d d d d d d d d (11)
+e e e e e e e e e e e e e e e (15)
+f (1)
+g g g g g g (6)
+h h h (3)
+i i i i i i i i i i i i i i (14)
+j j j j j j j j j j j j (12)
+
+Will this list more than 10 words?
+
+Are the word counts accurate?
