@@ -5,10 +5,10 @@ author: Dee Corcoran
 
 date: 08/13/2017
 
-A program that takes in multiple txt files
-and returns the top 10 highest-occurring words
-found in said files and the number of times
-that each occurred.
+A program that takes as argument an array of multiple
+txt files and returns a list of tuples containing
+the words most commonly used in the txt files and
+their individual counts.
 """
 
 
@@ -26,7 +26,7 @@ def addFile(text, dict):
     text = text.lower()         #undo any capitalization
     wordArray = re.split("[^a-z0-9']+", text)   
     for word in wordArray:
-        if word == '':
+        if word == '':          #check if file is empty
             break
         if word not in dict:
             dict[word] = 1      #add new word
@@ -37,10 +37,8 @@ def addFile(text, dict):
 
 
 def wc(args):
-    """Prompts user for multiple txt file names until they
-    enter the word stop, at which point the program calls
-    report() and ends."""
-    
+    """Processes any text files listed in args and returns
+    their word count list."""
     dict = {}
     for fileName in args:
         if fileName[-4::] != ".txt":        #add '.txt' extension if it was forgotten
@@ -51,6 +49,7 @@ def wc(args):
             myFile = open(fileName, 'r')
             text = myFile.read().replace('\n', ' ')
             dict = addFile(text, dict)
+    #sort the dictionary by word count in descending order
     sortedDict = sorted(dict.items(),key=operator.itemgetter(1),reverse=True)
-    upper = min(10, len(sortedDict))
+    upper = min(10, len(sortedDict))        #in case the dictionary has less than 10 entries
     return sortedDict[0:upper]
