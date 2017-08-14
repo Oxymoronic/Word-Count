@@ -12,9 +12,9 @@ that each occurred.
 """
 
 
-import re
-import operator
-import os
+import re           #regex
+import operator     #sort a dictionary
+import os           #check validity of file
 
 
 
@@ -23,13 +23,13 @@ def addFile(text, dict):
     are delimited by any characters other than letters or
     numbers."""
     
-    text = text.lower()
-    wordArray = re.split("[^a-z0-9']+", text)
+    text = text.lower()         #undo any capitalization
+    wordArray = re.split("[^a-z0-9']+", text)   
     for word in wordArray:
         if word not in dict:
-            dict[word] = 1
+            dict[word] = 1      #add new word
         else:
-            dict[word] += 1
+            dict[word] += 1     #increase count of an existing word
     return dict
 
 
@@ -37,28 +37,38 @@ def addFile(text, dict):
 def report(dict):
     """Prints a list of the top 10 most-occurring words and
     each of their word counts."""
+
+    #sort words by their count, in descending order
     sortedDict = sorted(dict.items(),key=operator.itemgetter(1),reverse=True)
     n = 0
-    numWords = min(10, len(sortedDict))
+    numWords = min(10, len(sortedDict))     #in case we have a list of less
+    print("\n")                             #than 10 words
     while n < numWords:
         entry = sortedDict[n]
         print("\"" + entry[0] + "\":", entry[1])
         n += 1
+    print("\n")
 
 
 
 def main():
+    """Prompts user for multiple txt file names until they
+    enter the word stop, at which point the program calls
+    report() and ends."""
+    
     dict = {}
     fileName = ""
     print("Please enter file name(s). Type 'stop' to end program")
     while True:
         fileName = input("\nFile name: ")
-        if fileName.lower() == "stop":
+        if fileName.lower() == "stop":      #check if user has typed the stop command
             report(dict)
             break
-        if not os.path.exists(fileName):
+        if fileName[-4::] != ".txt":        #add '.txt' extension if it was forgotten
+            fileName += ".txt"
+        if not os.path.exists(fileName):    #check that file name exists
             print("Cannot find file '" + fileName + "'")
-        else:
+        else:                               #read file
             myFile = open(fileName, 'r')
             text = myFile.read().replace('\n', ' ')
             dict = addFile(text, dict)
