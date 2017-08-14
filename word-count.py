@@ -42,12 +42,16 @@ def report(dict):
     sortedDict = sorted(dict.items(),key=operator.itemgetter(1),reverse=True)
     n = 0
     numWords = min(10, len(sortedDict))     #in case we have a list of less
-    print("\n")                             #than 10 words
+                                            #than 10 words
+    print("\n\n10 Most Common Words Across All Files")
+    print("----------------------------------------")
+    print('{: <15} {}'.format('Word', '| Occurrences'))
+    print("----------------------------------------")
     while n < numWords:
         entry = sortedDict[n]
-        print("\"" + entry[0] + "\":", entry[1])
+        print('{:<15} {}'.format("\'" + entry[0] + "\'", "| "+str(entry[1])) + "\n")
         n += 1
-    print("\n")
+    print("----------------------------------------\n")
 
 
 
@@ -58,16 +62,17 @@ def main():
     
     dict = {}
     fileName = ""
-    print("Please enter file name(s). Type 'stop' to end program")
+    print("\n-------------------- Word Count ------------------------")
+    print("Please enter file name(s). Type \'STOP\' to print results.\n")
     while True:
-        fileName = input("\nFile name: ")
+        fileName = input("File name: ")
         if fileName.lower() == "stop":      #check if user has typed the stop command
             report(dict)
             break
         if fileName[-4::] != ".txt":        #add '.txt' extension if it was forgotten
             fileName += ".txt"
         if not os.path.exists(fileName):    #check that file name exists
-            print("Cannot find file '" + fileName + "'")
+            print("Cannot find file \'" + fileName + "\'")
         else:                               #read file
             myFile = open(fileName, 'r')
             text = myFile.read().replace('\n', ' ')
