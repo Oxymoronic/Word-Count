@@ -14,6 +14,7 @@ that each occurred.
 
 import re
 import operator
+import os
 
 
 
@@ -34,11 +35,14 @@ def addFile(text, dict):
 
 
 def report(dict):
-    sortedDict = sorted(d.items(),key=operator.itemgetter(1))
+    """Prints a list of the top 10 most-occurring words and
+    each of their word counts."""
+    sortedDict = sorted(dict.items(),key=operator.itemgetter(1),reverse=True)
     n = 0
-    while n < 10:
+    numWords = min(10, len(sortedDict))
+    while n < numWords:
         entry = sortedDict[n]
-        print(entry[0] + ":", entry[1])
+        print("\"" + entry[0] + "\":", entry[1])
         n += 1
 
 
@@ -47,11 +51,19 @@ def main():
     dict = {}
     fileName = ""
     print("Please enter file name(s). Type 'stop' to end program")
-    while fileName != "stop":
-        fileName = input("File name: ")
-        myFile = open(fileName, 'r')
-        text = myFile.read().replace('\n', ' ')
-        dict = addFile(text, dict)
-    report(dict)
+    while True:
+        fileName = input("\nFile name: ")
+        if fileName.lower() == "stop":
+            report(dict)
+            break
+        if not os.path.exists(fileName):
+            print("Cannot find file '" + fileName + "'")
+        else:
+            myFile = open(fileName, 'r')
+            text = myFile.read().replace('\n', ' ')
+            dict = addFile(text, dict)
+    return
 
 
+
+main()
